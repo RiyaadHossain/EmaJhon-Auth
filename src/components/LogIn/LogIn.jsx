@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../Firebase.init';
 import './LogIn.css'
 
 const LogIn = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [errors, setErrors] = useState('')
     const navigate = useNavigate()
+    const location = useLocation()
     const [
         signInWithEmailAndPassword,
         user,
@@ -27,9 +27,10 @@ const LogIn = () => {
         e.preventDefault()
         signInWithEmailAndPassword(email, password)
     }
+    const from = location.state?.from?.pathname || '/'
 
     if (user) {
-        navigate('/shop')
+        navigate(from, {replace: true})
     }
 
     return (
@@ -46,7 +47,6 @@ const LogIn = () => {
                 </div>
                 <div className='little-msg'><Link to={'/signup'}>New to Ema Jhon. <span className='color'> Sign Up</span></Link></div>
                 <p>{loading}</p>
-                <p style={{color: 'red'}}>{ errors }</p>
                 <p style={{color: 'red'}}>{ error }</p>
                 <input className='submit-btn' type="submit" value="Log In" />
 

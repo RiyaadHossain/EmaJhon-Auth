@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../Firebase.init'
 import './SignUp.css'
@@ -15,6 +15,7 @@ const SignUp = () => {
     const [password, setPassword] = useState('')
     const [confirmpassword, setConfirmPassword] = useState('')
     const [errors, setErrors] = useState('')
+    const location = useLocation()
     const navigate = useNavigate()
 
     const onEmailBlur = e => {
@@ -28,8 +29,10 @@ const SignUp = () => {
         setConfirmPassword(e.target.value)
     }
 
+    const from = location?.from?.pathname || '/';
+    
     if (user) {
-        navigate('/shop')
+        navigate(from, {replace: true})
     }
 
     const onFormSubmit = e => {
