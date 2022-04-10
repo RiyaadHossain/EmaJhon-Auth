@@ -38,12 +38,12 @@ const SignUp = () => {
     const onFormSubmit = e => {
         e.preventDefault()
 
-        if (password < 6) {
+        if (password.length < 6) {
             setErrors("Password should have at least 6 Characters.")
             return
         }
         if (password !== confirmpassword) {
-            setErrors("Password Didn't match.")
+            setErrors("Password didn't match.")
             return
         }
 
