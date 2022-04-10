@@ -7,7 +7,7 @@ import Product from '../Product/Product';
 import './Shop.css';
 
 const Shop = () => {
-    const [products, setProducts] = useProducts();
+    const [products] = useProducts();
     const [cart, setCart] = useState([]);
 
     useEffect( () =>{
@@ -25,7 +25,6 @@ const Shop = () => {
     }, [products])
 
     const handleAddToCart = (selectedProduct) =>{
-        console.log(selectedProduct);
         let newCart = [];
         const exists = cart.find(product => product.id === selectedProduct.id);
         if(!exists){

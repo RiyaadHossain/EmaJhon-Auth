@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../Firebase.init'
 import './SignUp.css'
 
 const SignUp = () => {
 
+    const [
+        createUserWithEmailAndPassword,
+        user, error,
+      ] = useCreateUserWithEmailAndPassword(auth);
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmpassword, setConfirmPassword] = useState('')
-    const [error, setError] = useState('')
+    const [errors, setErrors] = useState('')
+    const navigate = useNavigate()
 
     const onEmailBlur = e => {
         setEmail(e.target.value)
@@ -20,8 +28,23 @@ const SignUp = () => {
         setConfirmPassword(e.target.value)
     }
 
+    if (user) {
+        navigate('/shop')
+    }
+
     const onFormSubmit = e => {
         e.preventDefault()
+
+        if (password < 6) {
+            setErrors("Password should have at least 6 Characters.")
+            return
+        }
+        if (password !== confirmpassword) {
+            setErrors("Password Didn't match.")
+            return
+        }
+
+        createUserWithEmailAndPassword(email, password)
 
     }
 
@@ -46,6 +69,8 @@ const SignUp = () => {
                     <input onBlur={onConfirmPasswordBlur} type="password" name="password" id="" />
                 </div>
                 <div className='little-msg'><Link to={'/register'}>Already have an Account. <span className='color'> Log In</span></Link></div>
+                <p style={{color: 'red'}}>{ errors }</p>
+                <p style={{color: 'red'}}>{ error }</p>
                 <input className='submit-btn' type="submit" value="Sign Up" />
 
             </form>

@@ -6,6 +6,7 @@ const LogIn = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [errors, setErrors] = useState('')
 
     const onEmailBlur = e => {
         setEmail(e.target.value)
@@ -32,6 +33,8 @@ const LogIn = () => {
                     <input onBlur={onPasswordBlur} type="email" name="" id="" />
                 </div>
                 <div className='little-msg'><Link to={'/signup'}>New to Ema Jhon. <span className='color'> Sign Up</span></Link></div>
+                <p style={{color: 'red'}}>{ errors }</p>
+                <p style={{color: 'red'}}>{ error }</p>
                 <input className='submit-btn' type="submit" value="Log In" />
 
             </form>
