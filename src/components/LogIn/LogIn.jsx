@@ -1,22 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LogIn.css'
 
 const LogIn = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
+
+    const onEmailBlur = e => {
+        setEmail(e.target.value)
+    }
+    const onPasswordBlur = e => {
+        setPassword(e.target.value)
+    }
+
+    const onFormSubmit = e => {
+        e.preventDefault()
+        
+    }
+
     return (
         <div className='form-container'>
-            <form>
+            <form onSubmit={onFormSubmit}>
                 <h2>Log In</h2>
                 <div className='input-group'>
                     <label htmlFor="">Your Email</label>
-                    <input type="email" name="" id="" />
+                    <input onBlur={onEmailBlur} type="email" name="" id="" />
                 </div>
                 <div className='input-group'>
                     <label htmlFor="">Your Passowrd</label>
-                    <input type="email" name="" id="" />
+                    <input onBlur={onPasswordBlur} type="email" name="" id="" />
                 </div>
-                <div className='little-msg'><Link to={'/register'}>New to Ema Jhon. <span className='color'> Sign Up</span></Link></div>
-                <input className='submit-btn' type="submit" value="Sign Up" />
+                <div className='little-msg'><Link to={'/signup'}>New to Ema Jhon. <span className='color'> Sign Up</span></Link></div>
+                <input className='submit-btn' type="submit" value="Log In" />
 
             </form>
         </div>
